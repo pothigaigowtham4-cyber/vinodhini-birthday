@@ -20,14 +20,13 @@
         }
 
         body {
-            background-color: var(--dark);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            user-select: none;
-        }
-
+    background-color: var(--dark);
+    color: var(--text);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    min-height: 100dvh;
+    user-select: none;
+}
         #canvas-container {
             position: absolute;
             top: 0;
@@ -275,7 +274,9 @@
 </head>
 <body>
 
-    <audio id="bg-music" loop src="bg_music.mp3"></audio>
+  <audio id="bg-music" preload="auto" loop>
+    <source src="bg_music.mp3" type="audio/mpeg">
+</audio>
     <div id="canvas-container">
         <canvas id="animationCanvas"></canvas>
     </div>
@@ -503,9 +504,20 @@
         }
 
         function startMovie() {
-            document.getElementById('start-screen').classList.remove('active');
-            music.play().catch(e => console.log("Audio started."));
-            nextScene(1);
+
+    const startScreen = document.getElementById('start-screen');
+
+    music.play().catch(err => {
+        console.log("Audio error:", err);
+    });
+
+    startScreen.classList.remove('active');
+
+    setTimeout(() => {
+        startScreen.style.display = "none";
+        nextScene(1);
+    }, 1200);
+}
         }
 
         function nextScene(sceneNumber) {
@@ -548,18 +560,27 @@
         }
 
         function runSlideshow() {
-            if (slideshowInterval) return;
-            let slides = document.querySelectorAll('#slideshow .slide-img');
-            let currentSlide = 0;
 
-            slideshowInterval = setInterval(() => {
-                if(currentScene === 4) {
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('active');
-                }
-            }, 3000);
-        }
+    if(slideshowInterval){
+        clearInterval(slideshowInterval);
+    }
+
+    let slides = document.querySelectorAll('#slideshow .slide-img');
+
+    let currentSlide = 0;
+
+    slideshowInterval = setInterval(() => {
+
+        if(currentScene !== 4) return;
+
+        slides.forEach(slide => slide.classList.remove('active'));
+
+        currentSlide = (currentSlide + 1) % slides.length;
+
+        slides[currentSlide].classList.add('active');
+
+    }, 3000);
+}
 
         function nextReason() {
             if(currentReasonIdx < reasons.length) {
@@ -748,14 +769,22 @@
         }
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particlesArray.forEach(p => {
-                if(p.type !== effectType) p.type = effectType;
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particlesArray.forEach(p => {
+
+        if(p.type !== effectType){
+            p.type = effectType;
+            p.reset();
         }
+
+        p.update();
+        p.draw();
+    });
+
+    requestAnimationFrame(animate);
+}
 
         initCanvasEngine();
         animate();
