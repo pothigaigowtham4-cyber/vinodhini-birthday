@@ -586,19 +586,24 @@ let text = "Neeyum nanum serndhu vazha pora andha naal rombave seekirama vandhur
 
         function runSlideshow() {
 
-    if(slideshowInterval){
+    if (slideshowInterval) {
         clearInterval(slideshowInterval);
     }
 
-    let slides = document.querySelectorAll('#slideshow .slide-img');
-
+    const slides = document.querySelectorAll('#slideshow .slide-img');
     let currentSlide = 0;
+
+    // reset all slides first
+    slides.forEach((s, i) => {
+        s.classList.remove('active');
+        if (i === 0) s.classList.add('active');
+    });
 
     slideshowInterval = setInterval(() => {
 
-        if(currentScene !== 4) return;
+        if (currentScene !== 4) return;
 
-        slides.forEach(slide => slide.classList.remove('active'));
+        slides[currentSlide].classList.remove('active');
 
         currentSlide = (currentSlide + 1) % slides.length;
 
@@ -606,7 +611,6 @@ let text = "Neeyum nanum serndhu vazha pora andha naal rombave seekirama vandhur
 
     }, 3000);
 }
-
         function nextReason() {
             if(currentReasonIdx < reasons.length) {
                 document.getElementById('reason-text').innerText = reasons[currentReasonIdx];
