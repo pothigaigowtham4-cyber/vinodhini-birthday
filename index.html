@@ -62,7 +62,9 @@
             padding: 20px;
             overflow-y: auto;
         }
-
+#scene2{
+    padding-top:80px;
+}
         .scene.active {
             opacity: 1;
             visibility: visible;
@@ -283,8 +285,36 @@ height:min(220px,30vw);
         height: 70vh;
         max-width: none;
     }
-   @media (max-width:768px){
+        .final-couple{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
 
+    font-family:'Playfair Display',serif;
+    color:var(--primary);
+    font-weight:700;
+
+    text-align:center;
+}
+
+.final-couple div:first-child,
+.final-couple div:last-child{
+    font-size:4rem;
+}
+
+.final-heart{
+    font-size:3rem;
+}
+   @media (max-width:768px){
+.final-couple div:first-child,
+    .final-couple div:last-child{
+        font-size:2.5rem;
+    }
+
+    .final-heart{
+        font-size:2rem;
+    }
     .scene{
         padding:15px;
     }
@@ -339,7 +369,9 @@ height:min(220px,30vw);
     #scene-blessing .romantic-title{
         font-size:2rem !important;
     }
-
+#scene2{
+        padding-top:120px;
+    }
     #scene2 .romantic-title{
         font-size:3rem !important;
     }
@@ -482,7 +514,15 @@ height:min(220px,30vw);
     </div>
 
     <div id="scene-end" class="scene" style="background: #000;">
-        <h1 class="romantic-title" style="font-size: 4rem; letter-spacing: 2px;">❤️ POTHI & VINODHINI ❤️</h1>
+        <div class="final-couple">
+    <div>POTHI</div>
+    <div class="final-heart">❤️</div>
+    <div>VINODHINI</div>
+</div>
+
+<h3 class="cinematic-text" style="color: var(--gold);">
+    Forever Begins Soon...
+</h3>
         <h3 class="cinematic-text" style="color: var(--gold); font-size: 1.5rem;">Forever Begins Soon...</h3>
     </div>
 
