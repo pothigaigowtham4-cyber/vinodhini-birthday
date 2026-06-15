@@ -115,13 +115,18 @@
             visibility: visible;
         }
 
-      #photo-collage{
-    position:relative;
+     #photo-collage{
+    position:absolute;
+    top:0;
+    left:0;
     width:100%;
-    height:80vh;
+    height:100%;
+    z-index:5;
 }
 
 .memory-photo{
+    display:block !important;
+
     position:absolute;
 
     width:220px;
@@ -583,11 +588,11 @@ let text = "Neeyum nanum serndhu vazha pora andha naal rombave seekirama vandhur
       function runSlideshow() {
 
     const photos = document.querySelectorAll('.memory-photo');
-
+console.log("Photos found:", photos.length);
     let current = 0;
 
     function showPhoto() {
-
+console.log("Showing photo", current);
         if(current >= photos.length) return;
 
         let photo = photos[current];
